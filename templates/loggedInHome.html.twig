@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <h1>Accueil</h1>
+    <a href="/blog/posts/new">Ajouter un post</a>
+    <a href="/blog/posts">Voir les posts</a>
+    <a href="/blog/users/{{ user.id }}">Voir le profil</a>
+    {% if user.role == 'admin' %}
+    <a href="/blog/users">Voir les utilisateurs</a>
+    <a href="/blog/users?role=subscriber">Voir les abonnés</a>
+    <a href="/blog/users?role=await-author">Voir les demandes pour devenir auteur</a>
+    <a href="/blog/users?role=author">Voir les auteurs</a>
+    {% endif %}
+{% endblock %}

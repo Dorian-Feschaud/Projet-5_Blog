@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin comments</title>
+    </head>
+    <body>
+        <h1>Administration des commentaires</h1>
+        {% for comment in comments %}
+            <p>{{ comment.message }}</p>
+            <a href="/blog/posts/{{ post.id }}/comments/{{ comment.id }}/valid_comment">Accepter</a>
+            <a href="/blog/posts/{{ post.id }}/comments/{{ comment.id }}/refuse_comment">Refuser</a>
+        {% endfor %}
+    </body>
+</html>

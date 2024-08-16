@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Posts</title>
+    </head>
+    <body>
+        <a href="/blog">Accueil</a>
+        <h1>Posts</h1>
+        {% for post in posts %}
+            <a href="/blog/posts/{{ post.id }}">{{ post.title }}</a>
+        {% endfor %}
+    </body>
+</html>

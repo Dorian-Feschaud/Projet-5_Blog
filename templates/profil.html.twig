@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profil</title>
+    </head>
+    <body>
+        <a href="/blog">Accueil</a>
+        <h1>{{ user.email }}</h1>
+        <p>{{ user.firstname }}</p>
+        <p>{{ user.lastname }}</p>
+        <p>{{ user.image }}</p>
+        <p>{{ user.role }}</p>
+        {% if user.role == 'subscriber' %}
+        <a href="/blog/users/{{ user.id }}/author_submission">Author submission</a>
+        {% else %}
+        <a href="/blog/users/{{ user.id }}/posts">Voir mes posts<a>
+        {% endif %}
+        <a href="/blog/logout">logout</a>
+    </body>
+</html>

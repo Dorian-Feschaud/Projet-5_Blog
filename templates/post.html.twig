@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Posts</title>
+    </head>
+    <body>
+        <a href="/blog">Accueil</a>
+        <h1>{{ post.title}}</h1>
+        <a href="/blog/posts/{{ post.id }}/comments/new">Ajouter un commentaire</a>
+        {% if post.idUser == current_user_id %}
+            <a href="/blog/posts/{{ post.id }}/edit">Modifier le post</a>
+            <a href="/blog/posts/{{ post.id }}/comments/admin">Administration des commentaires</a>
+        {% endif %}
+        {% for comment in comments %}
+            <p>{{ comment.message }}</p>
+        {% endfor %}
+    </body>
+</html>

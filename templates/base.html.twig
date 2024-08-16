@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <link rel="stylesheet" type="text/css" href="css/style.css"/>
+            <link rel="stylesheet"type="text/css" href="css/header.css"/>
+            <link rel="stylesheet" type="text/css" href="css/footer.css"/>
+            <script src="https://kit.fontawesome.com/f68a2ad05b.js" crossorigin="anonymous"></script>
+            <title>{% block title %}{% endblock %}</title>
+        {% endblock %}
+    </head>
+    <body>
+        {% include "header.html.twig" %}
+        <section class="main">
+        {% block content %}
+        {% endblock %}
+        </section>
+        {% include "footer.html.twig" %}
+    </body>
+</html>

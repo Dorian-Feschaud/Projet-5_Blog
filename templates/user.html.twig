@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User</title>
+    </head>
+    <body>
+        <a href="/blog">Accueil</a>
+        <h1>{{ user.email }}</h1>
+        <p>{{ user.firstname }}</p>
+        <p>{{ user.lastname }}</p>
+        <p>{{ user.image }}</p>
+        <p>{{ user.role }}</p>
+        {% if user.role == 'await-author' %}
+        <p>Cet utilisateur à fait une demande pour devenir modérateur</p>
+        <a href="/blog/users/{{ user.id }}/valid_author">Accepter</a>
+        <a href="/blog/users/{{ user.id }}/refuse_author">Refuser</a>
+        {% endif %}
+        <a href="/blog/logout">logout</a>
+    </body>
+</html>

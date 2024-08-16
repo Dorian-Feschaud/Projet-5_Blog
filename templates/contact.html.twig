@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    <div class="contact-header">
+        <h1 class="contact-title">Formulaire de contact</h1>
+        <h2 class="contact-desc">Si vous avez des questions ou besoin d'informations supplémentaires, n'hésitez pas à remplir ce formulaire de contact !</h2>
+    </div>
+    <div class="contact-form">
+        <form>
+            <p class="label">Prénom</p>
+            <input type="text" name="firstname"/>
+            <p class="label">Nom</p>
+            <input type="text" name="lastname"/>
+            <p class="label">Email</p>
+            <input type="text" name="email"/>
+            <p class="label">Message</p>
+            <input type="text-area" name="message"/>
+            <input type="submit"/>
+        </form>
+    </div>
+    
+{% endblock %}

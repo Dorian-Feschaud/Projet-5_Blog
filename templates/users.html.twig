@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Users</title>
+    </head>
+    <body>
+        <a href="/blog">Accueil</a>
+        <h1>Users</h1>
+        {% for user in users %}
+            <a href="/blog/users/{{ user.id }}?id={{ current_user_id }}">{{ user.email }}</a>
+        {% endfor %}
+    </body>
+</html>
