@@ -1,12 +1,15 @@
 <?php
 
 require_once 'src/repository/UserRepository.php';
+require_once 'src/form/UserForm.php';
 require_once 'src/lib/Utils.php';
 require_once 'src/lib/DbPersist.php';
 
 class UserController {
     
     private UserRepository $user_repository;
+
+    private UserForm $user_form;
     
     private Utils $utils;
     
@@ -14,6 +17,7 @@ class UserController {
     
     public function __construct(){
         $this->user_repository = new UserRepository();
+        $this->user_form = new UserForm();
         $this->utils = new Utils();
         $this->db_persist = new DbPersist();
     }
@@ -34,7 +38,9 @@ class UserController {
             $this->utils->redirectHome();
         }
         
-        public function register(array $data):void {
+        public function register():void {
+            $data = $_POST;
+            $data['image'] = $_FILES['image'];
             $this->user_repository->register($data);
             
             $this->utils->redirectHome();
@@ -45,16 +51,16 @@ class UserController {
             $this->utils->redirectHome();
         }
 
-        public function profil(Twig\Environment $twig, int $id):void {
+        public function profil(Twig\Environment $twig, int $id, bool $logged_in):void {
             $user = $this->user_repository->getUser($id);
             
-            echo $twig->render('profil.html.twig', ['user' => $user]);
+            echo $twig->render('user/profil.html.twig', ['user' => $user, 'logged_in' => $logged_in]);
         }
         
         public function showOne(Twig\Environment $twig, int $id):void {
             $user = $this->user_repository->getUser($id);
             
-            echo $twig->render('user.html.twig', ['user' => $user]);
+            echo $twig->render('user/user.html.twig', ['user' => $user, 'logged_in' => $logged_in]);
         }
         
         public function author_submission(int $id):void {
@@ -84,19 +90,42 @@ class UserController {
         public function showAll(Twig\Environment $twig):void {
             $users = $this->user_repository->getUsers();
             
-            echo $twig->render('users.html.twig', ['users' => $users]);
+            echo $twig->render('user/users.html.twig', ['users' => $users]);
         }
         
         public function showAllByRole(Twig\Environment $twig, string $role):void {
             $users = $this->user_repository->getUsersByRole($role);
             
-            echo $twig->render('users.html.twig', ['users' => $users]);
+            echo $twig->render('user/users.html.twig', ['users' => $users]);
         }
 
         public function posts(Twig\Environment $twig, int $id):void {
             $posts = $this->user_repository->getPosts($id);
 
-            echo $twig->render('posts.html.twig', ['posts' => $posts]);
+            echo $twig->render('post/posts.html.twig', ['posts' => $posts]);
+        }
+
+        public function showEditForm(Twig\Environment $twig, int $id):void {
+            $user = $this->user_repository->getUser($id);
+            $context = array(
+                'id' => $user->getId(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'email' => $user->getEmail(),
+                'image' => $user->getImage(),
+                'password' => $user->getPassword(),
+            );
+            $this->user_form->userEditForm($twig, $context);
+        }
+
+        public function edit(array $data, int $id):void {
+            $user = $this->user_repository->getUser($id);
+            foreach($data as $key => $value) {
+                $user->{'set'.$this->utils->formateKey($key)}($value);
+            }
+            $this->db_persist->persist($user);
+    
+            $this->utils->redirectHome();
         }
         
     }
