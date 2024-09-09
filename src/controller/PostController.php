@@ -23,13 +23,13 @@ class PostController {
         $post = $this->post_repository->getPost($id);
         $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_VALIDATED);
     
-        echo $twig->render('post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id]);
+        echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id]);
     }
 
-    public function showAll(Twig\Environment $twig):void {
+    public function showAll(Twig\Environment $twig, bool $logged_in):void {
         $posts = $this->post_repository->getPosts();
     
-        echo $twig->render('posts.html.twig', ['posts' => $posts]);
+        echo $twig->render('post/posts.html.twig', ['posts' => $posts, 'logged_in' => $logged_in]);
     }
 
     public function showNewForm(Twig\Environment $twig):void {
@@ -48,7 +48,9 @@ class PostController {
         $this->post_form->postEditForm($twig, $context);
     }
 
-    public function new(array $data):void {
+    public function new():void {
+        $data = $_POST;
+        $data['image'] = $_FILES['image'];
         $this->post_repository->newPost($data);
 
         $this->utils->redirectHome();
@@ -68,6 +70,6 @@ class PostController {
         $post = $this->post_repository->getPost($id);
         $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_AWAIT_VALIDATION);
 
-        echo $twig->render('commentsAdmin.html.twig', ['post' => $post, 'comments' => $comments]);
+        echo $twig->render('comment/commentsAdmin.html.twig', ['post' => $post, 'comments' => $comments]);
     }
 }
