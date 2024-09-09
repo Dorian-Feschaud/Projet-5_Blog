@@ -1,0 +1,26 @@
+.post-item-link {
+    text-decoration: none;
+}
+
+.post-item {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+    padding: 1rem;
+}
+
+.post-title {
+    width: 100%;
+    color: #0D3B66;
+    font-size: 45px;
+    margin: 0;
+}
+
+.post-chapo {
+    width: 90%;
+    margin: 0;
+}
+
+.post-image {
+    width: 10%;
+}
