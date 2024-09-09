@@ -38,6 +38,9 @@ if (!empty($url)) {
                 case 'logout':
                     $route_controller->logout();
                     break;
+                case 'contact':
+                    $route_controller->contact();
+                    break;
                 default :
                     $class = ucfirst(substr($parts[0], 0, -1)) . 'Controller';
                     $controller = new $class(); // gerer page 404 avec un try sur le controller
@@ -107,83 +110,3 @@ if (!empty($url)) {
 else {
     $route_controller->homepage();
 }
-
-
-// if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
-
-//     if (!empty($url) && $url != 'login' && $url != 'register' && $url != 'logout') {
-//         $parts = explode('/', $url);
-//         $class = ucfirst(substr($parts[0], 0, -1)) . 'Controller';
-//         $controller = new $class();
-//         switch (count($parts)) {
-//             case 1:            
-//                 $controller->showAll($twig);
-//                 break;
-//             case 2:
-//                 switch (preg_match('/[^0-9]+$/', $parts[1])) {
-//                     case 0:
-//                         $controller->showOne($twig, $parts[1]);
-//                         break;
-//                     case 1:
-//                         switch ($parts[1]) {
-//                             case 'new':
-//                                 $controller->showNewForm($twig);
-//                                 break;
-//                             case 'submit':
-//                                 $controller->submit($_POST);
-//                                 break;
-//                         }
-//                         break;
-//                 }
-//                 break;
-//             case 4:
-//                 $class2 = ucfirst(substr($parts[2], 0, -1)) . 'Controller';
-//                 $controller2 = new $class2();
-//                 switch (preg_match('/[^0-9]+$/', $parts[3])) {
-//                     case 0:
-//                         $controller2->showOne($twig);
-//                         break;
-//                     case 1:
-//                         switch ($parts[3]) {
-//                             case 'new':
-//                                 $controller2->showNewForm($parts[1], $twig);
-//                                 break;
-//                             case 'submit':
-//                                 $controller2->submit($_POST);
-//                                 break;
-//                         }
-//                         break;
-//                 }
-//                 break;
-//             default :
-//                 break;
-//         }
-//     }
-//     else if ($url == 'logout') {
-//         $user_controller = new UserController();           
-//         $user_controller->logout();
-//     }
-//     else {
-//         $home_controller = new HomeController();
-//         $home_controller->homepage($twig);
-//     }
-// }
-// else {
-//     if (!empty($url)) {
-//         $parts = explode('/', $url);
-//         if (!empty($_POST)) {
-//             $method = $parts[0];
-//             $user_controller = new UserController();           
-//             $user_controller->$method($_POST);
-//         }
-//         else {
-//             $method = 'show' . ucfirst($parts[0]) . 'Form';
-//             $user_form = new UserForm();
-//             $user_form->$method($twig);
-//         }
-//     }
-//     else {
-//         $user_login_form = new UserForm();
-//         $user_login_form->showLoginForm($twig);
-//     }
-// }
