@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/lib/DbConnect.php';
+require_once 'src/lib/Utils.php';
 require_once 'src/model/User.php';
 
 class UserRepository {
@@ -9,9 +10,12 @@ class UserRepository {
 
     private PDO $db;
 
+    private Utils $utils;
+
     public function __construct() {
         $this->db_connect = new DbConnect();
         $this->db = $this->db_connect->getDb();
+        $this->utils = new Utils();
     }
 
     public function register(array $data):void {
@@ -37,6 +41,10 @@ class UserRepository {
             $values .= '?, ';
             if ($key == 'password') {
                 $execute[] = hash('sha256', $value);
+            }
+            else if ($key == 'image') {
+                $file = $this->utils->uploadFile($value);
+                $execute[] = $file;
             }
             else {
                 $execute[] = $value;
