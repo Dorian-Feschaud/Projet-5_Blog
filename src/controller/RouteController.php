@@ -4,6 +4,7 @@ require_once 'src/controller/HomeController.php';
 require_once 'src/controller/PostController.php';
 require_once 'src/controller/CommentController.php';
 require_once 'src/controller/UserController.php';
+require_once 'src/controller/ContactController.php';
 require_once 'src/form/PostForm.php';
 require_once 'src/form/CommentForm.php';
 require_once 'src/form/UserForm.php';
@@ -26,12 +27,7 @@ class RouteController {
 
     function homepage():void {
         $home_controller = new HomeController();
-        if ($this->logged_in) {
-            $home_controller->loggedInHomepage($this->twig);
-        }
-        else {
-            $home_controller->defaultHomepage($this->twig);
-        }
+        $home_controller->homepage($this->twig, $this->logged_in);
     }
 
     function register():void {
@@ -41,7 +37,7 @@ class RouteController {
         else {
             if (!empty($_POST)) {
                 $user_controller = new UserController();
-                $user_controller->register($_POST);
+                $user_controller->register();
             }
             else {
                 $user_form = new UserForm();
@@ -83,29 +79,29 @@ class RouteController {
                     $controller->showAllByRole($this->twig, $_GET['role']);
                 }
                 else {
-                    $controller->showAll($this->twig);
+                    $controller->showAll($this->twig, $this->logged_in);
                 }
             }
         }
         else {
-            $controller->showAll($this->twig);
+            $controller->showAll($this->twig, $this->logged_in);
         }
     }
 
     function showOne(Object $controller, int $id):void {
         $current_user_id = $this->utils->getIdUser();
-        if ($this->logged_in && $id == $current_user_id) {
-            $controller->profil($this->twig, $id, $current_user_id);
+        if ($this->logged_in && $id == $current_user_id && get_class($controller) == 'UserController')  {
+            $controller->profil($this->twig, $id, $current_user_id, $this->logged_in);
         }
         else {
-            $controller->showOne($this->twig, $id, $current_user_id);
+            $controller->showOne($this->twig, $id, $current_user_id, $this->logged_in);
         }
     }
 
     function action(Object $controller):void {
         if ($this->logged_in) {
             if (!empty($_POST)) {
-                $controller->new($_POST);
+                $controller->new();
             }
             else {
                 $controller->showNewForm($this->twig);
@@ -184,6 +180,16 @@ class RouteController {
         }
         else {
             $this->utils->redirectHome();
+        }
+    }
+
+    function contact():void {
+        $contact_controller = new ContactController();
+        if (!empty($_POST)) {
+            $contact_controller->sendMail($_POST);
+        }
+        else {
+            $contact_controller->showContactForm($this->twig);
         }
     }
 }
