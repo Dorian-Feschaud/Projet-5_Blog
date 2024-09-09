@@ -59,4 +59,60 @@ class Utils {
         
         return $role == 'author';
     }
+
+    public function uploadFile(array $image):String {
+        $target_dir = "/blog/uploads/";
+        $target_file = $target_dir . basename($image["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["submit"])) {
+            $check = getimagesize($image["tmp_name"]);
+            if($check !== false) {
+                // var_dump("File is an image - " . $check["mime"] . ".");
+                // die();
+                $uploadOk = 1;
+            } else {
+                // var_dump("File is not an image.");
+                // die();
+                $uploadOk = 0;
+            }
+        }
+
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            // echo "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+
+        // Check file size
+        if ($image["size"] > 5000000) {
+            // echo "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+
+        // Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+            // echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            // var_dump("Sorry, your file was not uploaded.");
+            // die();
+        // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($image["tmp_name"], $target_file)) {
+                // var_dump("The file ". htmlspecialchars( basename( $image["name"])). " has been uploaded.");
+                // die();
+            } else {
+                // var_dump("Sorry, there was an error uploading your file.");
+                // die();
+            }
+        }
+
+        return $target_file;
+    }
 }
