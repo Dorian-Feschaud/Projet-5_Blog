@@ -32,8 +32,14 @@ class PostRepository {
                 $insert .= ', ';
                 $values .= ', ';
             }
-            $execute[] = $value;
-            // $i++;
+            if ($key == 'image') {
+                $file = $this->utils->uploadFile($value);
+                $execute[] = $file;
+            }
+            else {
+                $execute[] = $value;
+            } 
+            $i++;
         }
         // insert automatic data (created_at, updated_at, id_user)
         $insert .= 'created_at, ';
@@ -48,7 +54,6 @@ class PostRepository {
         $execute[] = $id_user;
 
         $query = $this->db->prepare($insert . ' ' . $values);
-        var_dump($query);
         $query->execute($execute);
     }
     
