@@ -6,7 +6,7 @@
     <body>
         <a href="/blog">Accueil</a>
         <h1>Register</h1>
-        <form action="/blog/register" method="POST">
+        <form action="/blog/register" method="POST" enctype="multipart/form-data">
     <div>
        <label for="lastname">Nom</label><br/>
        <input type="text" id="lastname" name="lastname"/>
@@ -21,7 +21,7 @@
    </div>
    <div>
       <label for="image">Image</label><br/>
-      <input type="text" id="image" name="image"/>
+      <input type="file" id="image" name="image"/>
    </div>
    <div>
       <label for="password">Mot de passe</label><br/>

@@ -6,7 +6,7 @@
     <body>
         <a href="/blog">Accueil</a>
         <h1>New Post</h1>
-        <form action="/blog/posts/new" method="POST">
+        <form action="/blog/posts/new" method="POST" enctype="multipart/form-data">
             <div>
                 <label for="title">Titre</label><br/>
                 <input type="text" id="title" name="title"/>
@@ -17,7 +17,7 @@
             </div>
             <div>
                 <label for="image">Image</label><br/>
-                <input type="text" id="image" name="image"/>
+                <input type="file" id="image" name="image"/>
             </div>
             <div>
                 <label for="content">Contenu</label><br/>

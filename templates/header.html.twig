@@ -8,6 +8,16 @@
             <hr class="underline"/>
         </div>
         <div class="nav-item">
+            <a class="nav-link" href="/blog/contact">Contact</a>
+            <hr class="underline"/>
+        </div>
+        {% if logged_in %}
+        <div class="nav-item">
+            <a class="nav-link" href="/blog/users/{{ user.id }}">Profil</a>
+            <hr class="underline"/>
+        </div>
+        {% else %}
+        <div class="nav-item">
             <a class="nav-link" href="/blog/login">Se connecter</a>
             <hr class="underline"/>
         </div>
@@ -15,5 +25,6 @@
             <a class="nav-link" href="/blog/register">Créer un compte</a>
             <hr class="underline"/>
         </div>
+        {% endif %}
     </nav>
 </header>

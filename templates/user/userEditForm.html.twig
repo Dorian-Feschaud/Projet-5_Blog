@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit User</title>
+    </head>
+    <body>
+        <a href="/blog">Accueil</a>
+        <h1>Edit User</h1>
+        <form action="/blog/users/{{ id }}/edit" method="POST">
+            <div>
+                <label for="firstname">Prénom</label><br/>
+                <input type="text" id="firstname" name="firstname" value="{{ firstname }}"/>
+            </div>
+            <div>
+                <label for="lastname">Nom</label><br/>
+                <input type="text" id="lastname" name="lastname" value="{{ lastname }}"/>
+            </div>
+            <div>
+                <label for="email">Email</label><br/>
+                <input type="text" id="email" name="email" value="{{ email }}"/>
+            </div>
+            <img src="{{ image }}" alt="user-image"/>
+            <div>
+                <label for="image">Image</label><br/>
+                <input type="file" id="image" name="image"/>
+            </div>
+            <div>
+                <label for="password">Mot de passe</label><br/>
+                <input type="text-area" id="password" name="password" value="{{ password }}"/>
+            </div>
+            <div>
+                <input type="submit"/>
+            </div>
+        </form>
+    </body>
+</html>

@@ -8,7 +8,7 @@
         <h1>{{ user.email }}</h1>
         <p>{{ user.firstname }}</p>
         <p>{{ user.lastname }}</p>
-        <p>{{ user.image }}</p>
+        <img src="{{ user.image }}" alt="{{ user.image }}"/>
         <p>{{ user.role }}</p>
         {% if user.role == 'await-author' %}
         <p>Cet utilisateur à fait une demande pour devenir modérateur</p>

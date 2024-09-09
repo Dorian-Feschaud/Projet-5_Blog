@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Posts</title>
-    </head>
-    <body>
-        <a href="/blog">Accueil</a>
-        <h1>{{ post.title}}</h1>
+{% extends "base.html.twig" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.chapo }}</p>
+        <img class="post-image" src="{{ post.image }}" alt="{{ post.image }}"/>
+        <p>{{ post.content }}</p>
         <a href="/blog/posts/{{ post.id }}/comments/new">Ajouter un commentaire</a>
         {% if post.idUser == current_user_id %}
             <a href="/blog/posts/{{ post.id }}/edit">Modifier le post</a>
@@ -14,5 +16,5 @@
         {% for comment in comments %}
             <p>{{ comment.message }}</p>
         {% endfor %}
-    </body>
-</html>
+    </section>
+{% endblock %}
