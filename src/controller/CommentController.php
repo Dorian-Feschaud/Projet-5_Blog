@@ -21,13 +21,13 @@ class CommentController {
     public function showOne(Twig\Environment $twig, int $id):void {
         $comment = $this->comment_repository->getComment($id);
     
-        echo $twig->render('comment.html.twig', ['comment' => $comment]);
+        echo $twig->render('comment/comment.html.twig', ['comment' => $comment]);
     }
 
     public function showAll(Twig\Environment $twig):void {
         $comments = $this->comment_repository->getComments();
     
-        echo $twig->render('comments.html.twig', ['comments' => $comments]);
+        echo $twig->render('comment/comments.html.twig', ['comments' => $comments]);
     }
 
     public function showNewForm(Twig\Environment $twig, int $id_post):void {
