@@ -1,6 +1,6 @@
 <header>
-    <a href="">
-        <img class="logo" src="uploads/df-logo.png"/>
+    <a href="/blog">
+        <img class="logo" src="/blog/uploads/df-logo.png"/>
     </a>
     <nav class="navbar">
         <div class="nav-item">
@@ -11,9 +11,9 @@
             <a class="nav-link" href="/blog/contact">Contact</a>
             <hr class="underline"/>
         </div>
-        {% if logged_in %}
+        {% if session.logged_in %}
         <div class="nav-item">
-            <a class="nav-link" href="/blog/users/{{ user.id }}">Profil</a>
+            <a class="nav-link" href="/blog/users/{{ session.user_id }}">Profil</a>
             <hr class="underline"/>
         </div>
         {% else %}
