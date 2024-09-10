@@ -61,7 +61,8 @@ class Utils {
     }
 
     public function uploadFile(array $image):String {
-        $target_dir = "/blog/uploads/";
+        $target_dir = ROOT_PATH."\uploads\\";
+        $res = "uploads/" . basename($image["name"]);
         $target_file = $target_dir . basename($image["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -82,19 +83,22 @@ class Utils {
 
         // Check if file already exists
         if (file_exists($target_file)) {
-            // echo "Sorry, file already exists.";
+            // var_dump("Sorry, file already exists.");
+            // die();
             $uploadOk = 0;
         }
 
         // Check file size
         if ($image["size"] > 5000000) {
-            // echo "Sorry, your file is too large.";
+            // var_dump("Sorry, your file is too large.");
+            // die();
             $uploadOk = 0;
         }
 
         // Allow certain file formats
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
-            // echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            // var_dump("Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+            // die();
             $uploadOk = 0;
         }
 
@@ -113,6 +117,6 @@ class Utils {
             }
         }
 
-        return $target_file;
+        return $res;
     }
 }
