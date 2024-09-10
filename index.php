@@ -1,14 +1,7 @@
 <?php
 
-// require_once 'src/controller/HomeController.php';
-// require_once 'src/controller/PostController.php';
-// require_once 'src/controller/CommentController.php';
-// require_once 'src/controller/UserController.php';
-// require_once 'src/form/PostForm.php';
-// require_once 'src/form/CommentForm.php';
-// require_once 'src/form/UserForm.php';
-// require_once 'src/form/UserForm.php';
-// require_once 'src/lib/TwigLoader.php';
+define('ROOT_PATH', __DIR__);
+
 require_once 'src/controller/RouteController.php';
 
 session_start();
