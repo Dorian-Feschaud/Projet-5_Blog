@@ -10,6 +10,7 @@ class CommentController {
     private CommentRepository $comment_repository;
     private CommentForm $comment_form;
     private Utils $utils;
+    private DbPersist $db_persist;
 
     public function __construct(){
         $this->comment_repository = new CommentRepository();
