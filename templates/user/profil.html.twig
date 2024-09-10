@@ -8,13 +8,14 @@
         <h1>{{ user.email }}</h1>
         <p>{{ user.firstname }}</p>
         <p>{{ user.lastname }}</p>
-        <img src="{{ user.image }}" alt="{{ user.image }}"/>
+        <img src="/blog/{{ user.image }}" alt="{{ user.image }}"/>
         <p>{{ user.role }}</p>
         <a href="/blog/users/{{ user.id }}/edit">Modifier le profil</a>
         {% if user.role == 'subscriber' %}
         <a href="/blog/users/{{ user.id }}/author_submission">Author submission</a>
         {% else %}
         <a href="/blog/users/{{ user.id }}/posts">Voir mes posts<a>
+        <a href="/blog/posts/new">Ajouter un post<a>
         {% endif %}
         <a href="/blog/logout">logout</a>
     </section>

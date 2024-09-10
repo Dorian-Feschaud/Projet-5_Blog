@@ -6,7 +6,7 @@
     <body>
         <a href="/blog">Accueil</a>
         <h1>Edit User</h1>
-        <form action="/blog/users/{{ id }}/edit" method="POST">
+        <form action="/blog/users/{{ id }}/edit" method="POST" enctype="multipart/form-data">
             <div>
                 <label for="firstname">Prénom</label><br/>
                 <input type="text" id="firstname" name="firstname" value="{{ firstname }}"/>
@@ -19,7 +19,7 @@
                 <label for="email">Email</label><br/>
                 <input type="text" id="email" name="email" value="{{ email }}"/>
             </div>
-            <img src="{{ image }}" alt="user-image"/>
+            <img src="blog/{{ image }}" alt="user-image"/>
             <div>
                 <label for="image">Image</label><br/>
                 <input type="file" id="image" name="image"/>

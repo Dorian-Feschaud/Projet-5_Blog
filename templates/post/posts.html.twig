@@ -13,7 +13,7 @@
                 <div class="post-item">
                     <h3 class="post-title">{{ post.title }}</h3>
                     <p class="post-chapo">{{ post.chapo }}</p>
-                    <img class="post-image" src="{{ post.image }}" alt="post-image"/>
+                    <img class="post-image" src="/blog/{{ post.image }}" alt="{{ post.image }}"/>
                 </div>
             </a>
         {% endfor %}

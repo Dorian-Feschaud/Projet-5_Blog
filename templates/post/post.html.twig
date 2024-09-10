@@ -6,7 +6,7 @@
     <section>
         <h1>{{ post.title }}</h1>
         <p>{{ post.chapo }}</p>
-        <img class="post-image" src="{{ post.image }}" alt="{{ post.image }}"/>
+        <img class="post-image" src="/blog/{{ post.image }}" alt="{{ post.image }}"/>
         <p>{{ post.content }}</p>
         <a href="/blog/posts/{{ post.id }}/comments/new">Ajouter un commentaire</a>
         {% if post.idUser == current_user_id %}
