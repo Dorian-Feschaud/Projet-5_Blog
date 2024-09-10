@@ -26,10 +26,10 @@ class PostController {
         echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id]);
     }
 
-    public function showAll(Twig\Environment $twig, bool $logged_in):void {
+    public function showAll(Twig\Environment $twig):void {
         $posts = $this->post_repository->getPosts();
     
-        echo $twig->render('post/posts.html.twig', ['posts' => $posts, 'logged_in' => $logged_in]);
+        echo $twig->render('post/posts.html.twig', ['posts' => $posts]);
     }
 
     public function showNewForm(Twig\Environment $twig):void {
@@ -57,9 +57,16 @@ class PostController {
     }
 
     public function edit(array $data, int $id):void {
+        $data['image'] = $_FILES['image'];
         $post = $this->post_repository->getPost($id);
         foreach($data as $key => $value) {
-            $post->{'set'.$this->utils->formateKey($key)}($value);
+            if ($key == 'image') {
+                $img = $this->utils->uploadFile($value);
+                $post->{'set'.$this->utils->formateKey($key)}($img);
+            }
+            else {
+                $post->{'set'.$this->utils->formateKey($key)}($value);
+            }  
         }
         $this->db_persist->persist($post);
 
