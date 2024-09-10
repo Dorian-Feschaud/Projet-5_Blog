@@ -11,6 +11,7 @@ class TwigLoader {
     public function __construct() {
         $this->loader = new \Twig\Loader\FilesystemLoader('templates');
         $this->twig = new \Twig\Environment($this->loader);
+        $this->twig->addGlobal('session', $_SESSION);
     }
 
     public function getTwig():Twig\Environment {
