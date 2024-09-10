@@ -12,7 +12,7 @@ textarea {
 
 input[type=submit] {
     background-color: #0D3B66;
-    border: solid 2px white;
+    border: none;
     border-radius: 1rem;
     height: 2rem;
     width: 50%;
