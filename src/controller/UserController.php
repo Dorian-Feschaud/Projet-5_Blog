@@ -51,16 +51,16 @@ class UserController {
             $this->utils->redirectHome();
         }
 
-        public function profil(Twig\Environment $twig, int $id, bool $logged_in):void {
+        public function profil(Twig\Environment $twig, int $id):void {
             $user = $this->user_repository->getUser($id);
             
-            echo $twig->render('user/profil.html.twig', ['user' => $user, 'logged_in' => $logged_in]);
+            echo $twig->render('user/profil.html.twig', ['user' => $user]);
         }
         
         public function showOne(Twig\Environment $twig, int $id):void {
             $user = $this->user_repository->getUser($id);
             
-            echo $twig->render('user/user.html.twig', ['user' => $user, 'logged_in' => $logged_in]);
+            echo $twig->render('user/user.html.twig', ['user' => $user]);
         }
         
         public function author_submission(int $id):void {
@@ -119,9 +119,16 @@ class UserController {
         }
 
         public function edit(array $data, int $id):void {
+            $data['image'] = $_FILES['image'];
             $user = $this->user_repository->getUser($id);
             foreach($data as $key => $value) {
-                $user->{'set'.$this->utils->formateKey($key)}($value);
+                if ($key == 'image') {
+                    $img = $this->utils->uploadFile($value);
+                    $user->{'set'.$this->utils->formateKey($key)}($img);
+                }
+                else {
+                    $user->{'set'.$this->utils->formateKey($key)}($value);
+                }               
             }
             $this->db_persist->persist($user);
     
