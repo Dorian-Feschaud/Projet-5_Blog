@@ -27,7 +27,7 @@ class RouteController {
 
     function homepage():void {
         $home_controller = new HomeController();
-        $home_controller->homepage($this->twig, $this->logged_in);
+        $home_controller->homepage($this->twig);
     }
 
     function register():void {
@@ -79,22 +79,22 @@ class RouteController {
                     $controller->showAllByRole($this->twig, $_GET['role']);
                 }
                 else {
-                    $controller->showAll($this->twig, $this->logged_in);
+                    $controller->showAll($this->twig);
                 }
             }
         }
         else {
-            $controller->showAll($this->twig, $this->logged_in);
+            $controller->showAll($this->twig);
         }
     }
 
     function showOne(Object $controller, int $id):void {
         $current_user_id = $this->utils->getIdUser();
         if ($this->logged_in && $id == $current_user_id && get_class($controller) == 'UserController')  {
-            $controller->profil($this->twig, $id, $current_user_id, $this->logged_in);
+            $controller->profil($this->twig, $id, $current_user_id);
         }
         else {
-            $controller->showOne($this->twig, $id, $current_user_id, $this->logged_in);
+            $controller->showOne($this->twig, $id, $current_user_id);
         }
     }
 
