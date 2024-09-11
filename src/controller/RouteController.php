@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/controller/HomeController.php';
+require_once 'src/controller/ErrorController.php';
 require_once 'src/controller/PostController.php';
 require_once 'src/controller/CommentController.php';
 require_once 'src/controller/UserController.php';
@@ -28,6 +29,11 @@ class RouteController {
     function homepage():void {
         $home_controller = new HomeController();
         $home_controller->homepage($this->twig);
+    }
+
+    function error():void {
+        $error_controller = new ErrorController();
+        $error_controller->errorPage($this->twig);
     }
 
     function register():void {
@@ -98,7 +104,7 @@ class RouteController {
         }
     }
 
-    function action(Object $controller):void {
+    function new(Object $controller):void {
         if ($this->logged_in) {
             if (!empty($_POST)) {
                 $controller->new();
@@ -131,12 +137,17 @@ class RouteController {
         $id_current_user = $this->utils->getIdUser();
         $post_repository = new PostRepository();
         $post = $post_repository->getPost($id_parent);
-        $id_author = $post->getIdUser();
-        if ($this->logged_in && ($this->utils->userIsAdmin() || $id_current_user == $id_author)) {
-            $controller->adminComments($this->twig, $id_parent);
+        if ($post != null) {
+            $id_author = $post->getIdUser();
+            if ($this->logged_in && ($this->utils->userIsAdmin() || $id_current_user == $id_author)) {
+                $controller->adminComments($this->twig, $id_parent);
+            }
+            else {
+                $this->utils->redirectHome();
+            }
         }
         else {
-            $this->utils->redirectHome();
+            $this->error();
         }
     }
 
