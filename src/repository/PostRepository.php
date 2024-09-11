@@ -57,14 +57,18 @@ class PostRepository {
         $query->execute($execute);
     }
     
-    public function getPost(int $id):Post {
+    public function getPost(int $id):?Post {
         $query = $this->db->prepare('SELECT * FROM post WHERE id= ?');
         $query->execute([$id]);
         $statement = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        $post = new Post($statement[0]);
+        if (!empty($statement)) {
+            $post = new Post($statement[0]);
 
-        return $post;
+            return $post;
+        }
+        
+        return null;
     }
     
     public function updatePost($id, $title, $chapo, $image, $content, $updated_at):void {
