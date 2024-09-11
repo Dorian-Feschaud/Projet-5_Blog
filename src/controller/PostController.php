@@ -21,9 +21,14 @@ class PostController {
 
     public function showOne(Twig\Environment $twig, int $id, int $current_user_id):void {
         $post = $this->post_repository->getPost($id);
-        $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_VALIDATED);
-    
-        echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id]);
+        if ($post != null) {
+            $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_VALIDATED);
+            
+            echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id]);
+        }
+        else {
+            echo $twig->render('error.html.twig', []);
+        }     
     }
 
     public function showAll(Twig\Environment $twig):void {
@@ -75,8 +80,14 @@ class PostController {
 
     public function adminComments(Twig\Environment $twig, int $id):void {
         $post = $this->post_repository->getPost($id);
-        $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_AWAIT_VALIDATION);
+        if ($post != null) {
+            $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_AWAIT_VALIDATION);
+            echo $twig->render('comment/commentsAdmin.html.twig', ['post' => $post, 'comments' => $comments]);
+        }
+        else {
+            echo $twig->render('error.html.twig', []);
+        }
 
-        echo $twig->render('comment/commentsAdmin.html.twig', ['post' => $post, 'comments' => $comments]);
+
     }
 }
