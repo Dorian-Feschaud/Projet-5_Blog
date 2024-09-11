@@ -79,14 +79,18 @@ class UserRepository {
         return 0;
     }
     
-    public function getUser(int $id):User {
+    public function getUser(int $id):?User {
         $query = $this->db->prepare('SELECT * FROM user WHERE id= ?');
         $query->execute([$id]);
         $statement = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        $user = new User($statement[0]);
+        if (!empty($statement)) {
+            $user = new User($statement[0]);
+            return $user;
+        }
 
-        return $user;
+        return null;
+
     }
 
     public function getUsers():array {
