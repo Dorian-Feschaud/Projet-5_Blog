@@ -59,8 +59,14 @@ class UserController {
         
         public function showOne(Twig\Environment $twig, int $id):void {
             $user = $this->user_repository->getUser($id);
+
+            if ($user != null) {
+                echo $twig->render('user/user.html.twig', ['user' => $user]);
+            }
+            else {
+                echo $twig->render('error.html.twig', ['user' => $user]);
+            }
             
-            echo $twig->render('user/user.html.twig', ['user' => $user]);
         }
         
         public function author_submission(int $id):void {
