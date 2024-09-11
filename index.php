@@ -36,65 +36,124 @@ if (!empty($url)) {
                     break;
                 default :
                     $class = ucfirst(substr($parts[0], 0, -1)) . 'Controller';
-                    $controller = new $class(); // gerer page 404 avec un try sur le controller
-                    $route_controller->showAll($controller);
+                    if ($class != 'PostController' && $class != 'UserController') {
+                        $route_controller->error();
+                    }
+                    else {
+                        $controller = new $class();
+                        $route_controller->showAll($controller);
+                    }
                     break;
             }
             break;
         case 2:
             $class = ucfirst(substr($parts[0], 0, -1)) . 'Controller';
-            $controller = new $class(); // gerer page 404 avec un try sur le controller
-            switch (preg_match('/[^0-9]+$/', $parts[1])) {
-                // objects/id
-                case 0:
-                    $id = $parts[1];
-                    $route_controller->showOne($controller, $id);
-                    break;
-                // objects/new
-                case 1:
-                    $route_controller->action($controller);
-                    break;
+            if ($class != 'PostController' && $class != 'UserController') {
+                $route_controller->error();
+            }
+            else {
+                $controller = new $class();
+                switch (preg_match('/[^0-9]+$/', $parts[1])) {
+                    // objects/id
+                    case 0:
+                        $id = $parts[1];
+                        $route_controller->showOne($controller, $id);
+                        break;
+                    // objects/new
+                    case 1:
+                        if ($parts[1] == 'new') {
+                            $route_controller->new($controller);
+                        }
+                        else {
+                            $route_controller->error();
+                        }
+                        break;
+                }
             }
             break;
         case 3: // objects/id/action
             $id = $parts[1];
             $class = ucfirst(substr($parts[0], 0, -1)) . 'Controller';
-            $controller = new $class(); // gerer page 404 avec un try sur le controller
-            $method = $parts[2];
-            $route_controller->$method($controller, $id);
+            if ($class != 'PostController' && $class != 'UserController') {
+                $route_controller->error();
+            }
+            else {
+                $methods = array(
+                    'edit',
+                    'author_submission',
+                    'valid_author',
+                    'refuse_author'
+                );
+                $controller = new $class();
+                $method = $parts[2];
+                if (in_array($method, $methods)) {
+                    $route_controller->$method($controller, $id);
+                }
+                else {
+                    $route_controller->error();
+                }
+            }
             break;
         case 4:
             $class = ucfirst(substr($parts[2], 0, -1)) . 'Controller';
-            $controller = new $class(); // gerer page 404 avec un try sur le controller
-            switch (preg_match('/[^0-9]+$/', $parts[3])) {
-                // object/id
-                case 0:
-                    $id = $parts[3];
-                    $route_controller->showOne($controller, $id);
-                    break;
-                // object/method
-                case 1:
-                    switch ($parts[3]) {
-                        case 'new':
-                            $id_parent = $parts[1];
-                            $route_controller->actionChildren($controller, $id_parent);
-                            break;
-                        case 'admin':
-                            $class = ucfirst(substr($parts[0], 0, -1)) . 'Controller';
-                            $controller = new $class(); // gerer page 404 avec un try sur le controller
-                            $id_parent = $parts[1];
-                            $route_controller->adminComments($controller, $id_parent);
-                            break;
-                    }
-                    break;
+            if ($class == 'CommentController') {
+                $controller = new $class();
+                switch (preg_match('/[^0-9]+$/', $parts[3])) {
+                    // object/id
+                    case 0:
+                        // $id = $parts[3];
+                        // $route_controller->showOne($controller, $id);
+                        $route_controller->error();
+                        break;
+                    // object/method
+                    case 1:
+                        switch ($parts[3]) {
+                            case 'new':
+                                $id_parent = $parts[1];
+                                $route_controller->actionChildren($controller, $id_parent);
+                                break;
+                            case 'admin':
+                                $class = ucfirst(substr($parts[0], 0, -1)) . 'Controller';
+                                if ($class == 'PostController') {
+                                    $controller = new $class();
+                                    $id_parent = $parts[1];
+                                    $route_controller->adminComments($controller, $id_parent);
+                                }
+                                else {
+                                    $route_controller->error();
+                                }
+                                break;
+                            default:
+                                $route_controller->error();
+                                break;
+                        }
+                        break;
+                }
+            }
+            else {
+                $route_controller->error();
             }
             break;
         case 5:
             $id = $parts[3];
             $class = ucfirst(substr($parts[2], 0, -1)) . 'Controller';
-            $controller = new $class(); // gerer page 404 avec un try sur le controller
-            $method = $parts[4];
-            $route_controller->$method($controller, $id);
+            if ($class == 'CommentController') {
+                $controller = new $class();
+                $methods = array(
+                    'valid_comment',
+                    'refuse_comment',
+                );
+                $method = $parts[4];
+                if (in_array($method, $methods)) {
+                    $route_controller->$method($controller, $id);
+                }
+                else {
+                    $route_controller->error();
+                }
+            }
+            else {
+                $route_controller->error();
+            }
             break;
         default :
             break;
