@@ -71,13 +71,8 @@ class PostRepository {
         return null;
     }
     
-    public function updatePost($id, $title, $chapo, $image, $content, $updated_at):void {
-        $query = $this->db->prepare('UPDATE post SET title = ?, chapo = ?, image = ?, content = ?, updated_at = ? WHERE id = ?');
-        $query->execute([$title, $chapo, $image, $content, $updated_at->format("Y-m-d H:i:s"), $id]);
-    }
-    
     public function deletePost($id):void {
-        $query = $this->db->prepare('DELETE post WHERE id = ?');
+        $query = $this->db->prepare('DELETE FROM post WHERE id = ?');
         $query->execute([$id]);
     }
 
@@ -110,6 +105,5 @@ class PostRepository {
     
         return $comments;
     }
-
-    // private function execute
+    
 }
