@@ -17,6 +17,11 @@
         <a href="/blog/users/{{ user.id }}/posts">Voir mes posts<a>
         <a href="/blog/posts/new">Ajouter un post<a>
         {% endif %}
+        {% if user.role == 'admin' %}
+        <a href="/blog/users?role=subscriber">Voir tous les abonnés<a>
+        <a href="/blog/users?role=moderator">Voir tous les modérateurs<a>
+        <a href="/blog/users?role=await-moderator">Voir toutes les demandes de modérateurs<a>
+        {% endif %}
         <a href="/blog/logout">logout</a>
     </section>
 {% endblock %}
