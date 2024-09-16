@@ -164,7 +164,17 @@ class RouteController {
     }
 
     function edit(Object $controller, int $id):void {
-        if ($this->logged_in) {
+        if (get_class($controller) == 'PostController') {
+            $id_current_user = $this->utils->getIdUser();
+            $post_repository = new PostRepository();
+            $post = $post_repository->getPost($id);
+            $id_author = $post->getIdUser();
+        }
+        else {
+            $id_current_user = 1;
+            $id_author = 2;
+        }
+        if ($this->logged_in && ($this->utils->userIsAdmin() || $id_current_user == $id_author)) {
             if (!empty($_POST)) {
                 $controller->edit($_POST, $id);
             }
@@ -174,6 +184,19 @@ class RouteController {
         }
         else {
             $this->utils->redirectHome();
+        }
+    }
+
+    function delete(Object $controller, int $id):void {
+        if (get_class($controller) == 'PostController') {
+            $id_current_user = $this->utils->getIdUser();
+            $post_repository = new PostRepository();
+            $post = $post_repository->getPost($id);
+            $id_author = $post->getIdUser();
+            if ($this->logged_in && ($this->utils->userIsAdmin() || $id_current_user == $id_author)) {
+                $controller->delete($id);
+            }
+
         }
     }
 
