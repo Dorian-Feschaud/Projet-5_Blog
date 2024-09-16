@@ -12,15 +12,15 @@
         <p class="user-role">{{ user.role }}</p>
         <a href="/blog/users/{{ user.id }}/edit">Modifier le profil</a>
         {% if user.role == 'subscriber' %}
-        <a href="/blog/users/{{ user.id }}/author_submission">Author submission</a>
+        <a href="/blog/users/{{ user.id }}/author_submission">Demander à être modérateur</a>
         {% else %}
         <a href="/blog/users/{{ user.id }}/posts">Voir mes posts<a>
         <a href="/blog/posts/new">Ajouter un post<a>
         {% endif %}
         {% if user.role == 'admin' %}
         <a href="/blog/users?role=subscriber">Voir tous les abonnés<a>
-        <a href="/blog/users?role=moderator">Voir tous les modérateurs<a>
-        <a href="/blog/users?role=await-moderator">Voir toutes les demandes de modérateurs<a>
+        <a href="/blog/users?role=author">Voir tous les modérateurs<a>
+        <a href="/blog/users?role=await-author">Voir toutes les demandes de modérateurs<a>
         {% endif %}
         <a href="/blog/logout">logout</a>
     </section>

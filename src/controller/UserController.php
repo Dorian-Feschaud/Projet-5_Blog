@@ -71,7 +71,7 @@ class UserController {
     
     public function author_submission(int $id):void {
         $user = $this->user_repository->getUser($id);
-        $user->setRole(User::ROLE_AWAIT_MODERATOR);
+        $user->setRole(User::ROLE_AWAIT_AUTHOR);
         $this->db_persist->persist($user);
         
         $this->utils->redirectHome();
@@ -79,7 +79,7 @@ class UserController {
 
     public function valid_author(int $id):void {
         $user = $this->user_repository->getUser($id);
-        $user->setRole(User::ROLE_MODERATOR);
+        $user->setRole(User::ROLE_AUTHOR);
         $this->db_persist->persist($user);
         
         $this->utils->redirectHome();

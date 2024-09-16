@@ -17,8 +17,8 @@ class User {
     private String $role;
 
     const ROLE_ADMIN = 'admin';
-    const ROLE_MODERATOR = 'moderator';
-    const ROLE_AWAIT_MODERATOR = 'await-moderator';
+    const ROLE_AUTHOR = 'author';
+    const ROLE_AWAIT_AUTHOR = 'await-author';
     const ROLE_SUBSCRIBER = 'subscriber';
 
     public function __construct(array $data) {
