@@ -119,4 +119,14 @@ class Utils {
 
         return $res;
     }
+
+    public function compareValue(mixed $entity, String $key, mixed $value):bool {
+        if ($key == 'image') {
+            $img = $this->uploadFile($value);
+            return $img == $entity->{'get'.$this->formateKey($key)}() || $img == 'uploads/';
+        }
+        else {
+            return $value == $entity->{'get'.$this->formateKey($key)}();
+        }
+    }
 }
