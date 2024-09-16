@@ -65,13 +65,15 @@ class PostController {
         $data['image'] = $_FILES['image'];
         $post = $this->post_repository->getPost($id);
         foreach($data as $key => $value) {
-            if ($key == 'image') {
-                $img = $this->utils->uploadFile($value);
-                $post->{'set'.$this->utils->formateKey($key)}($img);
-            }
-            else {
-                $post->{'set'.$this->utils->formateKey($key)}($value);
-            }  
+            if (!$this->utils->compareValue($post, $key, $value)) {
+                if ($key == 'image') {
+                    $img = $this->utils->uploadFile($value);
+                    $post->{'set'.$this->utils->formateKey($key)}($img);
+                }
+                else {
+                    $post->{'set'.$this->utils->formateKey($key)}($value);
+                } 
+            } 
         }
         $this->db_persist->persist($post);
 
