@@ -38,107 +38,112 @@ class UserController {
             $this->utils->redirectHome();
         }
         
-        public function register():void {
-            $data = $_POST;
-            $data['image'] = $_FILES['image'];
-            $this->user_repository->register($data);
-            
-            $this->utils->redirectHome();
+    public function register():void {
+        $data = $_POST;
+        $data['image'] = $_FILES['image'];
+        $this->user_repository->register($data);
+        
+        $this->utils->redirectHome();
+    }
+    
+    public function logout():void {
+        session_destroy();
+        $this->utils->redirectHome();
+    }
+
+    public function profil(Twig\Environment $twig, int $id):void {
+        $user = $this->user_repository->getUser($id);
+        
+        echo $twig->render('user/profil.html.twig', ['user' => $user]);
+    }
+    
+    public function showOne(Twig\Environment $twig, int $id):void {
+        $user = $this->user_repository->getUser($id);
+
+        if ($user != null) {
+            echo $twig->render('user/user.html.twig', ['user' => $user]);
+        }
+        else {
+            echo $twig->render('error.html.twig', ['user' => $user]);
         }
         
-        public function logout():void {
-            session_destroy();
-            $this->utils->redirectHome();
-        }
-
-        public function profil(Twig\Environment $twig, int $id):void {
-            $user = $this->user_repository->getUser($id);
-            
-            echo $twig->render('user/profil.html.twig', ['user' => $user]);
-        }
+    }
+    
+    public function author_submission(int $id):void {
+        $user = $this->user_repository->getUser($id);
+        $user->setRole(User::ROLE_AWAIT_MODERATOR);
+        $this->db_persist->persist($user);
         
-        public function showOne(Twig\Environment $twig, int $id):void {
-            $user = $this->user_repository->getUser($id);
+        $this->utils->redirectHome();
+    }
 
-            if ($user != null) {
-                echo $twig->render('user/user.html.twig', ['user' => $user]);
-            }
-            else {
-                echo $twig->render('error.html.twig', ['user' => $user]);
-            }
-            
-        }
+    public function valid_author(int $id):void {
+        $user = $this->user_repository->getUser($id);
+        $user->setRole(User::ROLE_MODERATOR);
+        $this->db_persist->persist($user);
         
-        public function author_submission(int $id):void {
-            $user = $this->user_repository->getUser($id);
-            $user->setRole(User::ROLE_AWAIT_AUTHOR);
-            $this->db_persist->persist($user);
-            
-            $this->utils->redirectHome();
-        }
+        $this->utils->redirectHome();
+    }
 
-        public function valid_author(int $id):void {
-            $user = $this->user_repository->getUser($id);
-            $user->setRole(User::ROLE_AUTHOR);
-            $this->db_persist->persist($user);
-            
-            $this->utils->redirectHome();
-        }
-
-        public function refuse_author(int $id):void {
-            $user = $this->user_repository->getUser($id);
-            $user->setRole(User::ROLE_SUBSCRIBER);
-            $this->db_persist->persist($user);
-            
-            $this->utils->redirectHome();
-        }
+    public function refuse_author(int $id):void {
+        $user = $this->user_repository->getUser($id);
+        $user->setRole(User::ROLE_SUBSCRIBER);
+        $this->db_persist->persist($user);
         
-        public function showAll(Twig\Environment $twig):void {
-            $users = $this->user_repository->getUsers();
-            
-            echo $twig->render('user/users.html.twig', ['users' => $users]);
-        }
+        $this->utils->redirectHome();
+    }
+    
+    public function showAll(Twig\Environment $twig):void {
+        $users = $this->user_repository->getUsers();
         
-        public function showAllByRole(Twig\Environment $twig, string $role):void {
-            $users = $this->user_repository->getUsersByRole($role);
-            
-            echo $twig->render('user/users.html.twig', ['users' => $users]);
-        }
+        echo $twig->render('user/users.html.twig', ['users' => $users]);
+    }
+    
+    public function showAllByRole(Twig\Environment $twig, string $role):void {
+        $users = $this->user_repository->getUsersByRole($role);
+        
+        echo $twig->render('user/users.html.twig', ['users' => $users]);
+    }
 
-        public function posts(Twig\Environment $twig, int $id):void {
-            $posts = $this->user_repository->getPosts($id);
+    public function posts(Twig\Environment $twig, int $id):void {
+        $posts = $this->user_repository->getPosts($id);
 
-            echo $twig->render('post/posts.html.twig', ['posts' => $posts]);
-        }
+        echo $twig->render('post/posts.html.twig', ['posts' => $posts]);
+    }
 
-        public function showEditForm(Twig\Environment $twig, int $id):void {
-            $user = $this->user_repository->getUser($id);
-            $context = array(
-                'id' => $user->getId(),
-                'firstname' => $user->getFirstname(),
-                'lastname' => $user->getLastname(),
-                'email' => $user->getEmail(),
-                'image' => $user->getImage(),
-                'password' => $user->getPassword(),
-            );
-            $this->user_form->userEditForm($twig, $context);
-        }
+    public function showEditForm(Twig\Environment $twig, int $id):void {
+        $user = $this->user_repository->getUser($id);
+        $context = array(
+            'id' => $user->getId(),
+            'firstname' => $user->getFirstname(),
+            'lastname' => $user->getLastname(),
+            'email' => $user->getEmail(),
+            'image' => $user->getImage(),
+            'password' => $user->getPassword(),
+        );
+        $this->user_form->userEditForm($twig, $context);
+    }
 
-        public function edit(array $data, int $id):void {
-            $data['image'] = $_FILES['image'];
-            $user = $this->user_repository->getUser($id);
-            foreach($data as $key => $value) {
-                if ($key == 'image') {
+    public function edit(array $data, int $id):void {
+        $data['image'] = $_FILES['image'];
+        $user = $this->user_repository->getUser($id);
+        foreach($data as $key => $value) {
+            if (!$this->utils->compareValue($user, $key, $value)) {
+                if ($key == 'password') {
+                    $user->{'set'.$this->utils->formateKey($key)}(hash('sha256', $value));
+                }
+                else if ($key == 'image') {
                     $img = $this->utils->uploadFile($value);
                     $user->{'set'.$this->utils->formateKey($key)}($img);
                 }
                 else {
                     $user->{'set'.$this->utils->formateKey($key)}($value);
-                }               
-            }
-            $this->db_persist->persist($user);
-    
-            $this->utils->redirectHome();
+                }
+            }               
         }
-        
+        $this->db_persist->persist($user);
+
+        $this->utils->redirectHome();
     }
+    
+}
