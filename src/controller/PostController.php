@@ -93,4 +93,10 @@ class PostController {
 
 
     }
+
+    function delete(int $id) {
+        $this->post_repository->deletePost($id);
+
+        $this->utils->redirectHome();
+    }
 }
