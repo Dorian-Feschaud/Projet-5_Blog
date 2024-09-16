@@ -75,6 +75,7 @@ class PostController {
                 } 
             } 
         }
+        $post->setUpdatedAt(new DateTime('now'));
         $this->db_persist->persist($post);
 
         $this->utils->redirectHome();
