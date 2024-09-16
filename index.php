@@ -82,7 +82,8 @@ if (!empty($url)) {
                     'edit',
                     'author_submission',
                     'valid_author',
-                    'refuse_author'
+                    'refuse_author',
+                    'posts'
                 );
                 $controller = new $class();
                 $method = $parts[2];
