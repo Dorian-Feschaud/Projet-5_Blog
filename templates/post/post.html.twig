@@ -11,6 +11,7 @@
         <a href="/blog/posts/{{ post.id }}/comments/new">Ajouter un commentaire</a>
         {% if post.idUser == current_user_id %}
             <a href="/blog/posts/{{ post.id }}/edit">Modifier le post</a>
+            <a href="/blog/posts/{{ post.id }}/delete">Supprimer le post</a>
             <a href="/blog/posts/{{ post.id }}/comments/admin">Administration des commentaires</a>
         {% endif %}
         {% for comment in comments %}
