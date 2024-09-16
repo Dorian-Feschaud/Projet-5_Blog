@@ -80,6 +80,7 @@ if (!empty($url)) {
             else {
                 $methods = array(
                     'edit',
+                    'delete',
                     'author_submission',
                     'valid_author',
                     'refuse_author',
