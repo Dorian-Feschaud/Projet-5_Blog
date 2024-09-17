@@ -34,7 +34,12 @@ class PostRepository {
             }
             if ($key == 'image') {
                 $file = $this->utils->uploadFile($value);
-                $execute[] = $file;
+                if ($file == 'uploads/') {
+                    $execute[] = 'uploads/default_post_pic.jpg';
+                }
+                else {
+                    $execute[] = $file;
+                }
             }
             else {
                 $execute[] = $value;
@@ -104,6 +109,16 @@ class PostRepository {
         }
     
         return $comments;
+    }
+
+    public function getAuthorName(int $id):User {
+        $query = $this->db->prepare('SELECT firstname, lastname FROM user WHERE id = ?');
+        $query->execute([$id]);
+        $statement = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $user = new User($statement[0]);
+
+        return $user;
     }
     
 }
