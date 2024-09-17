@@ -19,12 +19,13 @@ class PostController {
         $this->db_persist = new DbPersist();
     }
 
-    public function showOne(Twig\Environment $twig, int $id, int $current_user_id):void {
+    public function showOne(Twig\Environment $twig, int $id, ?int $current_user_id):void {
         $post = $this->post_repository->getPost($id);
         if ($post != null) {
+            $author = $this->post_repository->getAuthorName($post->getIdUser());
             $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_VALIDATED);
             
-            echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id]);
+            echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id, 'author' => $author]);
         }
         else {
             echo $twig->render('error.html.twig', []);
