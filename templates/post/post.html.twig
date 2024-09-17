@@ -6,9 +6,12 @@
     <section class="single-post-container">
         <h1 class="single-post-title">{{ post.title }}</h1>
         <p class="single-post-chapo">{{ post.chapo }}</p>
-        <img  class="single-post-image" src="/blog/{{ post.image }}" alt="{{ post.image }}"/>
-        <p>{{ post.updatedAt|date('d-m-Y') }}</p>
-        <p>{{ author.firstname }}{{ author.lastname }}</p>
+        <img class="single-post-image" src="/blog/{{ post.image }}" alt="{{ post.image }}"/>
+        <div class="single-post-infos">
+            <p>{{ author.lastname }} {{ author.firstname }}</p>
+            <p>{{ post.updatedAt|date('d-m-Y') }}</p>
+        </div>
+        <p class="single-post-content">{{ post.content }}</p>
         <div class="single-post-options">
             <a href="/blog/posts/{{ post.id }}/comments/new">Ajouter un commentaire</a>
             {% if post.idUser == current_user_id %}
@@ -17,8 +20,22 @@
                 <a class="delete-post" href="/blog/posts/{{ post.id }}/delete">Supprimer le post</a>
             {% endif %}
         </div>
-        {% for comment in comments %}
-            <p>{{ comment.message }}</p>
-        {% endfor %}
+        <p class="comments-title">Commentaires :</p>
+        {% if comments|length > 0 %}
+            <div class="comments-container">
+            {% for i in 0..comments|length - 1 %}
+                <div class="comment-item">
+                    <div class="comment-user">
+                        <img class="comment-user-image" src="/blog/{{ comments_authors[i].image }}" alt="user-image"/>
+                        <p class="comment-user-name">{{ comments_authors[i].lastname }} {{comments_authors[i].firstname }}</p>
+                    </div>
+                    <p>{{ comments[i].message }}</p>
+                    <p class="comment-date">{{ comments[i].createdAt|date('d-m-Y') }}</p>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Aucun commentaire</p>
+        {% endif %}
     </section>
 {% endblock %}

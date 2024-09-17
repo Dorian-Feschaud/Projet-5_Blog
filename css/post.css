@@ -62,3 +62,52 @@
     color: red !important;
     border: none !important;
 }
+
+.single-post-infos {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.comments-title {
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.comments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+.comment-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    padding: 1rem;  
+    gap: 1rem;
+}
+
+.comment-user {
+    display: flex;
+    gap: 1rem;
+}
+
+.comment-user-image {
+    height: 20px;
+    width: 20px;
+}
+
+.comment-user-name {
+    font-size: 14px;
+    font-style: italic;
+}
+
+.comment-date {
+    font-size: 14px;
+    font-style: italic;
+    text-align: end;
+}
+
