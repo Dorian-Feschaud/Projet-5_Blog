@@ -1,31 +1,35 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Edit Post</title>
-    </head>
-    <body>
-        <a href="/blog">Accueil</a>
-        <h1>Edit Post</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'un post{% endblock %}
+
+{% block content %}
+
+    <section class="intro">
+        <h1 class="intro-title">Modification d'un post</h1>
+    </section>
+    <seciton class="secondary">
         <form action="/blog/posts/{{ id }}/edit" method="POST" enctype="multipart/form-data">
-            <div>
-                <label for="title">Titre</label><br/>
+            <div class="form-item">
+                <label for="title">Titre</label>
                 <input type="text" id="title" name="title" value="{{ title }}"/>
             </div>
-            <div>
-                <label for="chapo">Chapô</label><br/>
+            <div class="form-item">
+                <label for="chapo">Chapô</label>
                 <input type="text" id="chapo" name="chapo" value="{{ chapo }}"/>
             </div>
-            <div>
-                <label for="image">Image</label><br/>
-                <input type="file" id="image" name="image" value="{{ image }}" accept="image/png, image/jpeg"/>
+            <div class="file-input">
+                <div class="form-item">
+                    <label for="image">Image</label>
+                    <input type="file" id="image" name="image" value="{{ image }}" accept="image/png, image/jpeg"/>
+                </div>
+                <img class="edit-post-img" src="/blog/{{ image }}" alt="post-image"/>
             </div>
-            <div>
-                <label for="content">Contenu</label><br/>
+            <div class="form-item">
+                <label for="content">Contenu</label>
                 <input type="text-area" id="content" name="content" value="{{ content }}"/>
             </div>
-            <div>
-                <input type="submit"/>
-            </div>
+            <input type="submit"/>
         </form>
-    </body>
-</html>
+    </section>
+
+{% endblock %}
