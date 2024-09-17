@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Admin comments</title>
-    </head>
-    <body>
-        <h1>Administration des commentaires</h1>
-        {% for comment in comments %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration des commentaires{% endblock %}
+
+{% block content %}
+
+    <section class="intro">
+        <h1 class="intro-title">Administration des commentaires</h1>
+    </section>
+    <section>
+        {% if comments|length > 0 %}
+            {% for comment in comments %}
             <p>{{ comment.message }}</p>
             <a href="/blog/posts/{{ post.id }}/comments/{{ comment.id }}/valid_comment">Accepter</a>
             <a href="/blog/posts/{{ post.id }}/comments/{{ comment.id }}/refuse_comment">Refuser</a>
         {% endfor %}
-    </body>
-</html>
+        {% else %}
+            <p>Aucun commentaire à valider pour le moment<p>
+        {% endif %}
+    </section>
+
+{% endblock %}
