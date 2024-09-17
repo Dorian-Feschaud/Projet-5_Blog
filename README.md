@@ -1,8 +1,9 @@
 # Projet-5_Blog
 
-https://kinsta.com/fr/blog/mailhog/
-https://gist.github.com/raelgc/6031306
-https://stackoverflow.com/questions/70296958/how-can-i-install-free-local-mailserver-on-windows
-https://netcorecloud.com/tutorials/sendmail-in-php-complete-guide/
+Installation du projet (XAMPP):
 
-https://stackoverflow.com/questions/8399389/accessing-session-from-twig-template
+1) Exécuter le script d'installation de la base de données (setup_db.sql)
+
+2) Exécuter le script d'importation des données fictives (import_data.sql)
+
+3) Se render sur le site (localhost/blog)
