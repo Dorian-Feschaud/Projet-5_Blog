@@ -3,17 +3,20 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-    <section>
-        <h1>{{ post.title }}</h1>
-        <p>{{ post.chapo }}</p>
-        <img class="post-image" src="/blog/{{ post.image }}" alt="{{ post.image }}"/>
-        <p>{{ post.content }}</p>
-        <a href="/blog/posts/{{ post.id }}/comments/new">Ajouter un commentaire</a>
-        {% if post.idUser == current_user_id %}
-            <a href="/blog/posts/{{ post.id }}/edit">Modifier le post</a>
-            <a href="/blog/posts/{{ post.id }}/delete">Supprimer le post</a>
-            <a href="/blog/posts/{{ post.id }}/comments/admin">Administration des commentaires</a>
-        {% endif %}
+    <section class="single-post-container">
+        <h1 class="single-post-title">{{ post.title }}</h1>
+        <p class="single-post-chapo">{{ post.chapo }}</p>
+        <img  class="single-post-image" src="/blog/{{ post.image }}" alt="{{ post.image }}"/>
+        <p>{{ post.updatedAt|date('d-m-Y') }}</p>
+        <p>{{ author.firstname }}{{ author.lastname }}</p>
+        <div class="single-post-options">
+            <a href="/blog/posts/{{ post.id }}/comments/new">Ajouter un commentaire</a>
+            {% if post.idUser == current_user_id %}
+                <a href="/blog/posts/{{ post.id }}/edit">Modifier le post</a>
+                <a href="/blog/posts/{{ post.id }}/comments/admin">Administration des commentaires</a>
+                <a class="delete-post" href="/blog/posts/{{ post.id }}/delete">Supprimer le post</a>
+            {% endif %}
+        </div>
         {% for comment in comments %}
             <p>{{ comment.message }}</p>
         {% endfor %}
