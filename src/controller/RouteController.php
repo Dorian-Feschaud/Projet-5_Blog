@@ -63,7 +63,7 @@ class RouteController {
             }
             else {
                 $user_form = new UserForm();
-                $user_form->loginForm($this->twig);
+                $user_form->loginForm($this->twig, $_GET);
             }
         }
     }
@@ -169,22 +169,29 @@ class RouteController {
             $post_repository = new PostRepository();
             $post = $post_repository->getPost($id);
             $id_author = $post->getIdUser();
-        }
-        else {
-            $id_current_user = 1;
-            $id_author = 2;
-        }
-        if ($this->logged_in && ($this->utils->userIsAdmin() || $id_current_user == $id_author)) {
-            if (!empty($_POST)) {
-                $controller->edit($_POST, $id);
+            if ($this->logged_in && ($this->utils->userIsAdmin() || $id_current_user == $id_author)) {
+                if (!empty($_POST)) {
+                    $controller->edit($_POST, $id);
+                }
+                else {
+                    $controller->showEditForm($this->twig, $id);
+                }
             }
             else {
-                $controller->showEditForm($this->twig, $id);
+                $this->utils->redirectHome();
             }
         }
         else {
-            $this->utils->redirectHome();
+            if ($this->logged_in) {
+                if (!empty($_POST)) {
+                    $controller->edit($_POST, $id);
+                }
+                else {
+                    $controller->showEditForm($this->twig, $id);
+                }
+            }
         }
+        
     }
 
     function delete(Object $controller, int $id):void {
