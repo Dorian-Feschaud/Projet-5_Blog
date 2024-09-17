@@ -26,12 +26,21 @@ class Utils {
         return (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true);
     }
 
-    public function getIdUser():int {
-        return $_SESSION['user_id'];
+    public function getIdUser():?int {
+        if (isset($_SESSION['user_id'])) {
+            return $_SESSION['user_id'];
+        }
+
+        return null;
     }
 
     public function redirectHome():void {
         header("Location: /blog");
+        exit();
+    }
+
+    public function loginError():void {
+        header("Location: /blog/login?error=1");
         exit();
     }
 
