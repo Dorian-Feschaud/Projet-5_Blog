@@ -111,8 +111,18 @@ class PostRepository {
         return $comments;
     }
 
-    public function getAuthorName(int $id):User {
+    public function getPostAuthor(int $id):User {
         $query = $this->db->prepare('SELECT firstname, lastname FROM user WHERE id = ?');
+        $query->execute([$id]);
+        $statement = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $user = new User($statement[0]);
+
+        return $user;
+    }
+
+    public function getCommentAuthor(int $id):User {
+        $query = $this->db->prepare('SELECT firstname, lastname, image FROM user WHERE id = ?');
         $query->execute([$id]);
         $statement = $query->fetchAll(PDO::FETCH_ASSOC);
 

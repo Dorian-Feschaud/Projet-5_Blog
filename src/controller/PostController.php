@@ -22,10 +22,16 @@ class PostController {
     public function showOne(Twig\Environment $twig, int $id, ?int $current_user_id):void {
         $post = $this->post_repository->getPost($id);
         if ($post != null) {
-            $author = $this->post_repository->getAuthorName($post->getIdUser());
+            $author = $this->post_repository->getPostAuthor($post->getIdUser());
             $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_VALIDATED);
+            $comments_authors = [];
+            if (count($comments) > 0) {
+                foreach($comments as $comment) {
+                    $comments_authors[] = $this->post_repository->getCommentAuthor($comment->getIdUser());
+                }
+            }
             
-            echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id, 'author' => $author]);
+            echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id, 'author' => $author, 'comments_authors' => $comments_authors]);
         }
         else {
             echo $twig->render('error.html.twig', []);
