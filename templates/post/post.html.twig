@@ -14,7 +14,7 @@
         <p class="single-post-content">{{ post.content }}</p>
         <div class="single-post-options">
             <a href="/blog/posts/{{ post.id }}/comments/new">Ajouter un commentaire</a>
-            {% if post.idUser == current_user_id %}
+            {% if post.idUser == current_user_id or user_is_admin %}
                 <a href="/blog/posts/{{ post.id }}/edit">Modifier le post</a>
                 <a href="/blog/posts/{{ post.id }}/comments/admin">Administration des commentaires</a>
                 <a class="delete-post" href="/blog/posts/{{ post.id }}/delete">Supprimer le post</a>
