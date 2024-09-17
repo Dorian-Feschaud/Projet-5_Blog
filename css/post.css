@@ -111,3 +111,16 @@
     text-align: end;
 }
 
+.comment-options {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.comment-title {
+    font-size: 20px;
+    text-decoration: underline;
+    margin: 1rem 0;
+}
+
