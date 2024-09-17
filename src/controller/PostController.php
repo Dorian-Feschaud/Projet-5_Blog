@@ -19,12 +19,20 @@ class PostController {
         $this->db_persist = new DbPersist();
     }
 
-    public function showOne(Twig\Environment $twig, int $id, int $current_user_id):void {
+    public function showOne(Twig\Environment $twig, int $id, ?int $current_user_id):void {
         $post = $this->post_repository->getPost($id);
         if ($post != null) {
+            $user_is_admin = $this->utils->userIsAdmin();
+            $author = $this->post_repository->getPostAuthor($post->getIdUser());
             $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_VALIDATED);
+            $comments_authors = [];
+            if (count($comments) > 0) {
+                foreach($comments as $comment) {
+                    $comments_authors[] = $this->post_repository->getCommentAuthor($comment->getIdUser());
+                }
+            }
             
-            echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id]);
+            echo $twig->render('post/post.html.twig', ['post' => $post, 'comments' => $comments, 'current_user_id' => $current_user_id, 'author' => $author, 'comments_authors' => $comments_authors, 'user_is_admin' => $user_is_admin]);
         }
         else {
             echo $twig->render('error.html.twig', []);
@@ -85,7 +93,13 @@ class PostController {
         $post = $this->post_repository->getPost($id);
         if ($post != null) {
             $comments = $this->post_repository->getCommentsByStatus($id, Comment::STATUS_AWAIT_VALIDATION);
-            echo $twig->render('comment/commentsAdmin.html.twig', ['post' => $post, 'comments' => $comments]);
+            $comments_authors = [];
+            if (count($comments) > 0) {
+                foreach($comments as $comment) {
+                    $comments_authors[] = $this->post_repository->getCommentAuthor($comment->getIdUser());
+                }
+            }
+            echo $twig->render('comment/commentsAdmin.html.twig', ['post' => $post, 'comments' => $comments, 'comments_authors' => $comments_authors]);
         }
         else {
             echo $twig->render('error.html.twig', []);

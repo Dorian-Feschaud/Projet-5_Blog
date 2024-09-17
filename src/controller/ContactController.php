@@ -27,8 +27,6 @@ class ContactController {
         ini_set('SMTP','localhost');
         ini_set('smtp_port',1025);
         mail('dorian.feschaud@gmail.com', 'Demande de contact', $message);
-        // var_dump(mail('dorian.feschaud@gmail.com', 'Demande de contact', $message));
-        // die();
         $this->utils->redirectHome();
     }
 

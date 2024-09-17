@@ -8,6 +8,7 @@
         <h1 class="intro-title">Utilisateurs</h1>
     </section>
     <section class="users-container">
+    {% if users|length > 0 %}
         {% for user in users %}
             <a class="visit-user-link" href="/blog/users/{{ user.id }}?id={{ current_user_id }}">
                 <div class="user-item">
@@ -19,6 +20,9 @@
                 </div>
             </a>
         {% endfor %}
+    {% else %}
+        <p>Aucun utilisateur</p>
+    {% endif %}
     </section>
 
 {% endblock %}

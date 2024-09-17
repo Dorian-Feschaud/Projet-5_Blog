@@ -9,11 +9,23 @@
     </section>
     <section>
         {% if comments|length > 0 %}
-            {% for comment in comments %}
-            <p>{{ comment.message }}</p>
-            <a href="/blog/posts/{{ post.id }}/comments/{{ comment.id }}/valid_comment">Accepter</a>
-            <a href="/blog/posts/{{ post.id }}/comments/{{ comment.id }}/refuse_comment">Refuser</a>
-        {% endfor %}
+            <p class="comment-title">Liste des commentaires à valider :</p>
+            <div class="comments-container">
+                {% for i in 0..comments|length - 1 %}
+                    <div class="comment-item">
+                        <div class="comment-user">
+                            <img class="comment-user-image" src="/blog/{{ comments_authors[i].image }}" alt="user-image"/>
+                            <p class="comment-user-name">{{ comments_authors[i].lastname }} {{comments_authors[i].firstname }}</p>
+                        </div>
+                        <p>{{ comments[i].message }}</p>
+                        <p class="comment-date">{{ comments[i].createdAt|date('d-m-Y') }}</p>
+                        <div class="comment-options">
+                            <a class="refuse" href="/blog/posts/{{ post.id }}/comments/{{ comments[i].id }}/refuse_comment">Refuser</a>
+                            <a class="accept" href="/blog/posts/{{ post.id }}/comments/{{ comments[i].id }}/valid_comment">Accepter</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
         {% else %}
             <p>Aucun commentaire à valider pour le moment<p>
         {% endif %}

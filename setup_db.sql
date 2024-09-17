@@ -47,12 +47,12 @@ CREATE TABLE IF NOT EXISTS `blog`.`post` (
   `updated_at` DATETIME NOT NULL,
   `id_user` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_post_id_user_idx` (`id_user` ASC) VISIBLE,
+  INDEX `fk_post_id_user_idx` (`id_user` ASC),
   CONSTRAINT `fk_post_id_user`
     FOREIGN KEY (`id_user`)
     REFERENCES `blog`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4;
@@ -70,18 +70,18 @@ CREATE TABLE IF NOT EXISTS `blog`.`comment` (
   `id_user` INT(11) NOT NULL,
   `id_post` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_comment_id_user_idx` (`id_user` ASC) VISIBLE,
-  INDEX `fk_comment_id_post_idx` (`id_post` ASC) VISIBLE,
+  INDEX `fk_comment_id_user_idx` (`id_user` ASC),
+  INDEX `fk_comment_id_post_idx` (`id_post` ASC),
   CONSTRAINT `fk_comment_id_post`
     FOREIGN KEY (`id_post`)
     REFERENCES `blog`.`post` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_comment_id_user`
     FOREIGN KEY (`id_user`)
     REFERENCES `blog`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb4;

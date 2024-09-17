@@ -26,12 +26,11 @@ class UserController {
         $user_id = $this->user_repository->login($data);
         switch ($user_id) {
             case 0: // login error
-                var_dump('invalid identifiant');
-                die();
+                $this->utils->loginError();
                 break;
                 default: // login successful
                 $_SESSION['logged_in'] = true;
-                $_SESSION['user_id'] = $user_id; // hash
+                $_SESSION['user_id'] = $user_id;
                 break;
             }
             

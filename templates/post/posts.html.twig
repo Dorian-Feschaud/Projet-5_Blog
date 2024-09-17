@@ -8,6 +8,7 @@
         <h2 class="intro-desc">Retrouvez tous les posts sur cette page</h2>
     </section>
     <section class="posts-container">
+    {% if posts|length > 0 %}
         {% for post in posts %}
             <a class="post-item-link" href="/blog/posts/{{ post.id }}">
                 <div class="post-item">
@@ -17,6 +18,9 @@
                 </div>
             </a>
         {% endfor %}
+    {% else %}
+        <p>Aucun post<p>
+    {% endif %}
     </section>
     
 {% endblock %}
