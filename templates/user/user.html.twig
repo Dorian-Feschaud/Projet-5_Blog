@@ -1,20 +1,30 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>User</title>
-    </head>
-    <body>
-        <a href="/blog">Accueil</a>
-        <h1>{{ user.email }}</h1>
-        <p>{{ user.firstname }}</p>
-        <p>{{ user.lastname }}</p>
-        <img src="{{ user.image }}" alt="{{ user.image }}"/>
-        <p>{{ user.role }}</p>
-        {% if user.role == 'await-author' %}
-        <p>Cet utilisateur à fait une demande pour devenir modérateur</p>
-        <a href="/blog/users/{{ user.id }}/valid_author">Accepter</a>
-        <a href="/blog/users/{{ user.id }}/refuse_author">Refuser</a>
+{% extends "base.html.twig" %}
+
+{% block title %}Utilisateur{% endblock %}
+
+{% block content %}
+    <section class="user-container">
+        <p class="user-firstname">{{ user.firstname }}</p>
+        <p class="user-lastname">{{ user.lastname }}</p>
+        <p class="user-email">{{ user.email }}</p>
+        <img class="user-image" src="/blog/{{ user.image }}" alt="{{ user.image }}"/>
+        {% if user.role == 'admin' %}
+            <p class="user-role">Administrateur</p>
+        {% elseif user.role == 'author' %}
+            <p class="user-role">Modérateur</p>
+        {% elseif user.role == 'await-author' %}
+            <p class="user-role">Abonné (en attente de validation modérateur)</p>
+        {% else %}
+            <p class="user-role">Abonné</p>            
         {% endif %}
-        <a href="/blog/logout">logout</a>
-    </body>
-</html>
+        {% if user.role == 'await-author' %}
+            <div class="author-submission">
+                <p>Cet utilisateur à fait une demande pour devenir modérateur</p>
+                <div class="author-submission-options">
+                    <a class="refuse" href="/blog/users/{{ user.id }}/refuse_author">Refuser</a>
+                    <a class="accept" href="/blog/users/{{ user.id }}/valid_author">Accepter</a>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

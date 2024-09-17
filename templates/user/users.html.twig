@@ -1,13 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Users</title>
-    </head>
-    <body>
-        <a href="/blog">Accueil</a>
-        <h1>Users</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block content %}
+
+    <section class="intro">
+        <h1 class="intro-title">Utilisateurs</h1>
+    </section>
+    <section class="users-container">
         {% for user in users %}
-            <a href="/blog/users/{{ user.id }}?id={{ current_user_id }}">{{ user.email }}</a>
+            <a class="visit-user-link" href="/blog/users/{{ user.id }}?id={{ current_user_id }}">
+                <div class="user-item">
+                    <img class="visit-user-image" src="/blog/{{ user.image }}" alt="user-image"/>
+                    <div class="visit-user-name">
+                        <p class="visit-user-lastname">{{ user.lastname }}</p>
+                        <p class="visit-user-firstname">{{ user.firstname }}</p>
+                    </div>
+                </div>
+            </a>
         {% endfor %}
-    </body>
-</html>
+    </section>
+
+{% endblock %}

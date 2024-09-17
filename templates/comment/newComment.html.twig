@@ -1,39 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>New Comment</title>
-    </head>
-    <body>
-        <a href="/blog">Accueil</a>
-        <h1>New Comment</h1>
-        <form action="/blog/posts/{{ id_post }}/comments/new" method="POST">
-            <div>
-                <label for="message">Message</label><br/>
-                <input type="text" id="message" name="message"/>
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau commentaire{% endblock %}
+
+{% block content %}
+<section class="intro">
+    <h1 class="intro-title">Nouveau commentaire</h1>
+</section>
+<section class="secondary">
+    <form action="/blog/posts/{{ id_post }}/comments/new" method="POST">
+            <div class="form-item">
+                <label for="message">Message</label>
+                <textarea name="message" id="message" rows="8" cols="1"></textarea>
             </div>
-            {# <div>
-                <label for="is_valid">Est valide</label><br/>
-                <input type="text" id="is_valid" name="is_valid"/>
-            </div> #}
-            {# <div>
-                <label for="created_at">Date de création</label><br/>
-                <input type="text" id="created_at" name="created_at"/>
-            </div>
-            <div>
-                <label for="validated_at">Date de validation</label><br/>
-                <input type="text" id="validated_at" name="validated_at"/>
-            </div> #}
-            {# <div>
-                <label for="id_user">User id</label><br/>
-                <input type="text" id="id_user" name="id_user"/>
-            </div>
-            <div>
-                <label for="id_post">Post id</label><br/>
-                <input type="text" id="id_post" name="id_post"/>
-            </div> #}
-            <div>
-                <input type="submit"/>
-            </div>
+            <input type="submit"/>
         </form>
-    </body>
-</html>
+</section>
+{% endblock %}

@@ -1,31 +1,32 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>New Post</title>
-    </head>
-    <body>
-        <a href="/blog">Accueil</a>
-        <h1>New Post</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau post{% endblock %}
+
+{% block content %}
+
+    <section class="intro">
+        <h1 class="intro-title">Nouveau post</h1>
+    </section>
+    <seciton class="secondary">
         <form action="/blog/posts/new" method="POST" enctype="multipart/form-data">
-            <div>
-                <label for="title">Titre</label><br/>
+            <div class="form-item">
+                <label for="title">Titre</label>
                 <input type="text" id="title" name="title"/>
             </div>
-            <div>
-                <label for="chapo">Chapô</label><br/>
+            <div class="form-item">
+                <label for="chapo">Chapô</label>
                 <input type="text" id="chapo" name="chapo"/>
             </div>
-            <div>
-                <label for="image">Image</label><br/>
+            <div class="form-item">
+                <label for="image">Image</label>
                 <input type="file" id="image" name="image" accept="image/png, image/jpeg"/>
             </div>
-            <div>
-                <label for="content">Contenu</label><br/>
-                <input type="text-area" id="content" name="content"/>
+            <div class="form-item">
+                <label for="content">Contenu</label>
+                <textarea name="content" id="content" rows="8" cols="1"></textarea>
             </div>
-            <div>
-                <input type="submit"/>
-            </div>
+            <input type="submit"/>
         </form>
-    </body>
-</html>
+    </section>
+
+{% endblock %}

@@ -9,19 +9,29 @@
         <p class="user-lastname">{{ user.lastname }}</p>
         <p class="user-email">{{ user.email }}</p>
         <img class="user-image" src="/blog/{{ user.image }}" alt="{{ user.image }}"/>
-        <p class="user-role">{{ user.role }}</p>
-        <a href="/blog/users/{{ user.id }}/edit">Modifier le profil</a>
-        {% if user.role == 'subscriber' %}
-        <a href="/blog/users/{{ user.id }}/author_submission">Demander à être modérateur</a>
-        {% else %}
-        <a href="/blog/users/{{ user.id }}/posts">Voir mes posts<a>
-        <a href="/blog/posts/new">Ajouter un post<a>
-        {% endif %}
         {% if user.role == 'admin' %}
-        <a href="/blog/users?role=subscriber">Voir tous les abonnés<a>
-        <a href="/blog/users?role=author">Voir tous les modérateurs<a>
-        <a href="/blog/users?role=await-author">Voir toutes les demandes de modérateurs<a>
+            <p class="user-role">Administrateur</p>
+        {% elseif user.role == 'author' %}
+            <p class="user-role">Modérateur</p>
+        {% elseif user.role == 'await-author' %}
+            <p class="user-role">Abonné (en attente de validation modérateur)</p>
+        {% else %}
+            <p class="user-role">Abonné</p>            
         {% endif %}
-        <a href="/blog/logout">logout</a>
+        <div class="options">
+            <a href="/blog/users/{{ user.id }}/edit">Modifier le profil</a>
+            {% if user.role == 'subscriber' %}
+            <a href="/blog/users/{{ user.id }}/author_submission">Demander à être modérateur</a>
+            {% elseif user.role == 'author' or user.role == 'admin' %}
+            <a href="/blog/users/{{ user.id }}/posts">Voir mes posts<a>
+            <a href="/blog/posts/new">Ajouter un post<a>
+            {% endif %}
+            {% if user.role == 'admin' %}
+            <a href="/blog/users?role=subscriber">Voir tous les abonnés<a>
+            <a href="/blog/users?role=author">Voir tous les modérateurs<a>
+            <a href="/blog/users?role=await-author">Voir toutes les demandes de modérateurs<a>
+            {% endif %}
+            <a class="logout" href="/blog/logout">Déconnexion</a>
+        </div>
     </section>
 {% endblock %}

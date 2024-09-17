@@ -26,3 +26,88 @@
     object-fit: cover;
     object-position: center;
 }
+
+.options {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.options > a{
+    color: #0D3B66;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: solid 2px #0D3B66;
+}
+
+.logout {
+    color: red !important;
+    border: none !important;
+}
+
+.user-email {
+    margin: 0.5rem 0;
+}
+
+.users-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+.user-item {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.visit-user-image {
+    height: 100px;
+    width: 100px;
+}
+
+.visit-user-link {
+    text-decoration: none;
+}
+
+.visit-user-name {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.visit-user-lastname {
+    font-size: 24px;
+    color: #0D3B66;
+    font-weight: 600;
+}
+
+.author-submission {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.author-submission-options {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.refuse {
+    color: red;
+    text-decoration: none;
+}
+
+.accept {
+    color: #0D3B66;
+    text-decoration: none;
+}

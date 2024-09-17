@@ -43,3 +43,13 @@ form {
     flex-direction: column;
     gap: 1rem;
 }
+
+.file-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-form-init-img {
+    width: 100px;
+    height: 100px;
+}
