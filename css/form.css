@@ -53,3 +53,9 @@ form {
     width: 100px;
     height: 100px;
 }
+
+.login-error {
+    color: red;
+    margin: 2rem 0;
+    font-size: 20px;
+}
