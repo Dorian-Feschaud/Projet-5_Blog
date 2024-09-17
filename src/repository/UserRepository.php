@@ -44,7 +44,12 @@ class UserRepository {
             }
             else if ($key == 'image') {
                 $file = $this->utils->uploadFile($value);
-                $execute[] = $file;
+                if ($file == 'uploads/') {
+                    $execute[] = 'uploads/default_user_profil_pic.png';
+                }
+                else {
+                    $execute[] = $file;
+                }
             }
             else {
                 $execute[] = $value;
