@@ -31,3 +31,34 @@
 .post-image {
     width: 10%;
 }
+
+.single-post-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.single-post-title {
+    margin: 0;
+    font-size: 48px;
+    color: #0D3B66;
+}
+
+.single-post-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.single-post-options > a{
+    color: #0D3B66;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: solid 2px #0D3B66;
+}
+
+.delete-post {
+    color: red !important;
+    border: none !important;
+}
